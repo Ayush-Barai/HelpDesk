@@ -45,7 +45,7 @@
                             <label for="severity" class="block text-sm font-medium text-gray-700">Severity (1-5)</label>
                             <select name="severity" id="severity" required
                                 class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
-                                <option value="1">1 - Low (Minor Question)</option>
+                                <option value="1">1 - Low (Small Question)</option>
                                 <option value="2">2 - Normal</option>
                                 <option value="3">3 - High</option>
                                 <option value="4">4 - Critical</option>
@@ -54,24 +54,79 @@
                         </div>
                     </div>
 
-                    <div class="mb-6">
+                    <div class="mb-6" x-data="fileUpload()">
                         <label class="block text-sm font-medium text-gray-700">Attachments</label>
-                        <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
+                        
+                        <div 
+                            class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-dashed rounded-md transition-colors"
+                            :class="dragging ? 'border-indigo-500 bg-indigo-50' : 'border-gray-300'"
+                            @dragover.prevent="dragging = true"
+                            @dragleave.prevent="dragging = false"
+                            @drop.prevent="handleDrop($event)"
+                        >
                             <div class="space-y-1 text-center">
-                                <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
+                                <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48">
                                     <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                                 </svg>
                                 <div class="flex text-sm text-gray-600">
                                     <label for="attachments" class="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500">
                                         <span>Upload files</span>
-                                        <input id="attachments" name="attachments[]" type="file" class="sr-only" multiple>
+                                        <input id="attachments" name="attachments[]" type="file" class="sr-only" multiple x-ref="fileInput" @change="addFiles($event)">
                                     </label>
                                     <p class="pl-1">or drag and drop</p>
                                 </div>
                                 <p class="text-xs text-gray-500">PNG, JPG, PDF, TXT up to 10MB</p>
                             </div>
                         </div>
+
+                        <template x-if="files.length > 0">
+                            <div class="mt-4 space-y-2">
+                                <p class="text-sm font-semibold text-gray-700">Selected Files:</p>
+                                <template x-for="(file, index) in files" :key="index">
+                                    <div class="flex items-center justify-between p-2 bg-gray-50 border rounded-md">
+                                        <div class="flex items-center space-x-2 truncate">
+                                            <span class="text-gray-500">📄</span>
+                                            <span class="text-sm text-gray-700 truncate" x-text="file.name"></span>
+                                            <span class="text-xs text-gray-400" x-text="'(' + (file.size / 1024 / 1024).toFixed(2) + ' MB)'"></span>
+                                        </div>
+                                        <button type="button" @click="removeFile(index)" class="text-red-500 hover:text-red-700 text-xs font-bold px-2">
+                                            X
+                                        </button>
+                                    </div>
+                                </template>
+                            </div>
+                        </template>
                     </div>
+
+                    <script>
+                        function fileUpload() {
+                            return {
+                                files: [],
+                                dragging: false,
+                                addFiles(event) {
+                                    const newFiles = Array.from(event.target.files);
+                                    this.files = [...this.files, ...newFiles];
+                                    this.syncInput();
+                                },
+                                handleDrop(event) {
+                                    this.dragging = false;
+                                    const droppedFiles = Array.from(event.dataTransfer.files);
+                                    this.files = [...this.files, ...droppedFiles];
+                                    this.syncInput();
+                                },
+                                removeFile(index) {
+                                    this.files.splice(index, 1);
+                                    this.syncInput();
+                                },
+                                syncInput() {
+                                    // This is the "Magic": It creates a new FileList and assigns it back to the hidden input
+                                    const dataTransfer = new DataTransfer();
+                                    this.files.forEach(file => dataTransfer.items.add(file));
+                                    this.$refs.fileInput.files = dataTransfer.files;
+                                }
+                            }
+                        }
+                    </script>
 
                     <div class="flex items-center justify-end">
                         <button type="submit" 

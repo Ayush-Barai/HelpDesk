@@ -35,14 +35,13 @@ class TicketController extends Controller
     {
         // Security: Only the owner or an agent can view
         if (auth()->user()->role !== 'agent' && auth()->id() !== $ticket->created_by) {
-            dd($ticket);
             abort(403);
         }
 
         $ticket->load(['creator', 'attachments', 'agent']);
         
         // Get agents list for the assignment dropdown
-        $agents = \App\Models\User::where('role', 'agent')->get();
+        $agents = User::where('role', 'agent')->get();
 
         return view('tickets.show', compact('ticket', 'agents'));
     }
@@ -85,22 +84,30 @@ class TicketController extends Controller
             }
         }
         return redirect('/');
-        // return redirect()->route('tickets.index')->with('success', 'Ticket created successfully!');
+        // return redirect()->route('tickets')->with('success', 'Ticket created successfully!');
+    }
+    
+    public function edit(Ticket $ticket) {
+        if (auth()->id() !== $ticket->created_by) abort(403);
+        return view('tickets.edit', compact('ticket'));
     }
     public function update(Request $request, Ticket $ticket)
     {
         // Only Agents can update status/assignment
-        if (auth()->user()->role !== 'agent') {
-            abort(403);
-        }
+        // if (auth()->user()->role !== 'agent' || auth()->id() !== $ticket->created_by) {
+        //     abort(403);
+        // }
 
         $validated = $request->validate([
-            'status' => 'required|in:Open,In Progress,Resolved,Closed',
-            'assigned_to' => 'nullable|exists:users,id',
+            'subject'     => 'required|string|max:255',
+            'description' => 'required|string',
+            // 'category'    => 'required|in:Access,Hardware,Network,Bug,Other',
+            // 'severity'    => 'required|integer|min:1|max:5',
+            // 'attachments.*' => 'nullable|file|mimes:png,jpg,jpeg,pdf,txt,log|max:10240', // 10MB limi
         ]);
 
         $ticket->update($validated);
 
-        return back()->with('success', 'Ticket updated successfully.');
+        return redirect('/');
     }
 }

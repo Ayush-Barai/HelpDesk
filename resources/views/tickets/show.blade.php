@@ -4,12 +4,22 @@
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 Ticket #{{ $ticket->id }}: {{ $ticket->subject }}
             </h2>
-            <span class="px-3 py-1 rounded-full text-sm font-bold 
-                {{ $ticket->status === 'Open' ? 'bg-yellow-100 text-yellow-800' : 'bg-green-100 text-green-800' }}">
-                {{ $ticket->status }}
-            </span>
+            <div class="flex space-x-2">
+                @if(auth()->id() === $ticket->created_by && $ticket->status !== 'Closed')
+                    <a href="{{ route('tickets.edit', $ticket) }}" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 transition">
+                        Edit Ticket
+                    </a>
+                @endif
+                
+                <span class="px-3 py-1 rounded-full text-sm font-bold 
+                    {{ $ticket->status === 'Open' ? 'bg-yellow-100 text-yellow-800' : 'bg-green-100 text-green-800' }}">
+                    {{ $ticket->status }}
+                </span>
+            </div>
         </div>
     </x-slot>
+
+    
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
@@ -31,13 +41,19 @@
                                             <svg class="w-6 h-6 text-gray-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"></path></svg>
                                             <span class="text-sm text-gray-600">{{ $file->original_name }}</span>
                                         </div>
-                                        <a href="/attachments/download" class="text-indigo-600 hover:text-indigo-900 text-sm font-medium">Download</a>
+                                        <a href="{{ route('attachments.download', $file )}}" class="text-indigo-600 hover:text-indigo-900 text-sm font-medium">Download</a>
                                     </li>
                                 @endforeach
                             </ul>
                         @else
                             <p class="text-sm text-gray-500 italic">No attachments provided.</p>
                         @endif
+                    </div>
+                    <div class="mt-4 pt-4 border-t">
+                        <a href="{{ route('tickets.attachments', $ticket) }}" class="text-sm text-indigo-600 hover:text-indigo-900 font-medium flex items-center">
+                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 6h16M4 10h16M4 14h16M4 18h16"></path></svg>
+                            View All Attachments Full Screen
+                        </a>
                     </div>
                 </div>
 
