@@ -110,4 +110,25 @@ class TicketController extends Controller
 
         return redirect('/');
     }
+
+    public function searchSimilar(Request $request)
+    {
+        $subject = $request->query('subject');
+
+        if (strlen($subject) < 3) {
+            return response()->json([]);
+        }
+
+        // Lane 1 logic: 
+        // 1. Shortlist: Only look at tickets created in the last 30 days
+        // 2. Shortlist: Exclude 'Closed' tickets as they are less relevant for current issues
+        // 3. Search: Use a simple 'LIKE' query (Classic approach)
+        $similarTickets = Ticket::where('status', '!=', 'Closed')
+            ->where('created_at', '>=', now()->subDays(30))
+            ->where('subject', 'LIKE', "%{$subject}%")
+            ->limit(5) // Requirement: "Top 5"
+            ->get(['id', 'subject', 'status', 'category']);
+
+        return response()->json($similarTickets);
+    }
 }

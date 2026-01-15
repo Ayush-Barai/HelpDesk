@@ -20,6 +20,12 @@
                         @error('subject') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
                     </div>
 
+                    <div id="similar-suggestions" class="hidden mt-2 p-4 bg-amber-50 border border-amber-200 rounded-md">
+                        <p class="text-sm font-bold text-amber-800 mb-2">⚠️ Possible similar tickets already exist:</p>
+                        <ul id="suggestions-list" class="text-sm text-amber-700 space-y-1 list-disc pl-5">
+                            </ul>
+                    </div>
+
                     <div class="mb-4">
                         <label for="description" class="block text-sm font-medium text-gray-700">Detailed Description</label>
                         <textarea name="description" id="description" rows="4" required
@@ -126,6 +132,39 @@
                                 }
                             }
                         }
+
+                        let debounceTimer;
+
+                        document.getElementById('subject').addEventListener('input', function() {
+                            const subject = this.value;
+                            const suggestionsBox = document.getElementById('similar-suggestions');
+                            const list = document.getElementById('suggestions-list');
+
+                            clearTimeout(debounceTimer);
+
+                            debounceTimer = setTimeout(() => {
+                                if (subject.length < 3) {
+                                    suggestionsBox.classList.add('hidden');
+                                    return;
+                                }
+
+                                fetch(`/tickets/search-similar?subject=${encodeURIComponent(subject)}`)
+                                    .then(response => response.json())
+                                    .then(data => {
+                                        if (data.length > 0) {
+                                            list.innerHTML = ''; // Clear previous
+                                            data.forEach(ticket => {
+                                                const li = document.createElement('li');
+                                                li.innerHTML = `<a href="/tickets/${ticket.id}" target="_blank" class="underline font-medium">${ticket.subject}</a> (${ticket.category} - ${ticket.status})`;
+                                                list.appendChild(li);
+                                            });
+                                            suggestionsBox.classList.remove('hidden');
+                                        } else {
+                                            suggestionsBox.classList.add('hidden');
+                                        }
+                                    });
+                            }, 500); // Wait 500ms after user stops typing
+                        });
                     </script>
 
                     <div class="flex items-center justify-end">

@@ -26,8 +26,11 @@ Route::get('/tickets/show/{ticket}',[TicketController::class,'show'])->middlewar
 Route::post('/tickets/store',[TicketController::class,'store'])->middleware(['auth']);
 Route::get('/tickets/edit/{ticket}',[TicketController::class,'edit'])->middleware(['auth'])->name('tickets.edit');
 Route::patch('/tickets/edit/{ticket}',[TicketController::class,'update'])->middleware(['auth'])->name('tickets.update');
+Route::get('/tickets/search-similar', [TicketController::class, 'searchSimilar'])->name('tickets.search.similar');
 
 Route::get('/attachments/download/{attachment}',[AttachmentController::class,'download'])->middleware('auth')->name('attachments.download');
 Route::get('/attachments/{ticket}',[AttachmentController::class,'attachmentsIndex'])->middleware('auth')->name('tickets.attachments');
+
+
 
 require __DIR__.'/auth.php';
