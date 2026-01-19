@@ -104,4 +104,3 @@ Maintain high standards by running the following commands:
 * **Search Engine:** While `LIKE` queries are efficient for this scale, for a production application with millions of tickets, I would transition to **Laravel Scout** with **Meilisearch** or **Algolia** for advanced fuzzy matching.
 
 ---
-Built with ❤️ by Ayush
