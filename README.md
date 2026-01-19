@@ -64,7 +64,8 @@ Before proceeding with the installation, ensure you have the following installed
     ```bash
     npm run dev
     ```
-    click -> http://localhost:8000
+5.  **Click Here**
+   http://localhost:8000
 ---
 
 ## 🔑 Demo Credentials
