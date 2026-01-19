@@ -85,9 +85,5 @@
         </div>
     </header>
 
-    <footer class="py-10 bg-white text-center border-t border-gray-100">
-        <!-- <p class="text-xs font-semibold text-slate-400 uppercase tracking-widest">© 2026 HelpDesk Triage • Built with Laravel</p> -->
-    </footer>
-
 </body>
 </html>

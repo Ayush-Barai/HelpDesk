@@ -100,8 +100,8 @@
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <span class="text-sm font-medium
-                                        {{ $ticket->severity == 5 ? 'text-red-600 font-bold' : '' }}
-                                        {{ $ticket->severity == 4 ? 'text-orange-500' : '' }}
+                                        {{ $ticket->severity == 1 ? 'text-red-600 font-bold' : '' }}
+                                        {{ $ticket->severity == 2 ? 'text-orange-500' : '' }}
                                         {{ $ticket->severity <= 3 ? 'text-gray-600' : '' }}">
                                         Level {{ $ticket->severity }}
                                     </span>
