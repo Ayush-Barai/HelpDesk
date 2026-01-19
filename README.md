@@ -24,7 +24,9 @@ A robust, internal IT ticketing system built for the **Jr. Laravel Take-Home Ass
 
 ---
 
-## 🛠️ Tech Stack
+## 🛠️ Tech Stack 
+
+Before proceeding with the installation, ensure you have the following installed on your local machine:
 
 * **Framework:** Laravel 12
 * **PHP Version:** 8.4
@@ -40,9 +42,10 @@ A robust, internal IT ticketing system built for the **Jr. Laravel Take-Home Ass
 1.  **Clone & Install Dependencies**
     ```bash
     git clone https://github.com/Ayush-Barai/HelpDesk.git
-    cd helpdesk-triage
+    cd HelpDesk
     composer install
-    npm install && npm run build
+    npm install 
+    npm run build
     ```
 
 2.  **Environment Configuration**

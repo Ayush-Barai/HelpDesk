@@ -46,6 +46,6 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        return redirect(route('tickets', absolute: false));
+        return redirect(route('welcome', absolute: false));
     }
 }
