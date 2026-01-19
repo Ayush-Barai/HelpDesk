@@ -17,14 +17,14 @@ class TicketFactory extends Factory
     public function definition(): array
     {
         return [
-            'subject'     => fake()->sentence(4),
+            'subject' => fake()->sentence(4),
             'description' => fake()->paragraph(3),
-            'category'    => fake()->randomElement(['Access', 'Hardware', 'Network', 'Bug', 'Other']),
-            'severity'    => fake()->numberBetween(1, 5),
-            'status'      => fake()->randomElement(['Open', 'In Progress', 'Resolved', 'Closed']),
+            'category' => fake()->randomElement(['Access', 'Hardware', 'Network', 'Bug', 'Other']),
+            'severity' => fake()->numberBetween(1, 5),
+            'status' => fake()->randomElement(['Open', 'In Progress', 'Resolved', 'Closed']),
             // These will be overridden in the Seeder
-            'created_by'  => \App\Models\User::factory(),
-            'assigned_to' => null, 
+            'created_by' => \App\Models\User::factory(),
+            'assigned_to' => null,
         ];
     }
 }

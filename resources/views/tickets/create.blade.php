@@ -155,7 +155,7 @@
                                             list.innerHTML = ''; // Clear previous
                                             data.forEach(ticket => {
                                                 const li = document.createElement('li');
-                                                li.innerHTML = `<a href="/tickets/${ticket.id}" target="_blank" class="underline font-medium">${ticket.subject}</a> (${ticket.category} - ${ticket.status})`;
+                                                li.innerHTML = `<a href="/tickets/show/${ticket.id}" target="_blank" class="underline font-medium">${ticket.subject}</a> (${ticket.category} - ${ticket.status})`;
                                                 list.appendChild(li);
                                             });
                                             suggestionsBox.classList.remove('hidden');

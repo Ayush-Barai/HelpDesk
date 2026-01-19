@@ -17,11 +17,11 @@ class AttachmentFactory extends Factory
     public function definition(): array
     {
         return [
-            'ticket_id'     => \App\Models\Ticket::factory(),
-            'file_path'     => 'tickets/attachments/fake_file.jpg',
+            'ticket_id' => \App\Models\Ticket::factory(),
+            'file_path' => 'tickets/attachments/fake_file.jpg',
             'original_name' => 'screenshot.jpg',
-            'file_type'     => 'image/jpeg',
-            'file_size'     => 1024 * 10000, // 10 MB
+            'file_type' => 'image/jpeg',
+            'file_size' => 1024 * 10000, // 10 MB
         ];
     }
 }

@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-use App\Models\Ticket;
 use App\Models\Attachment;
+use App\Models\Ticket;
+use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -17,18 +17,18 @@ class DatabaseSeeder extends Seeder
     {
         // 1. Create an Agent for testing
         $agent = User::factory()->create([
-            'name'  => 'Support Agent',
+            'name' => 'Support Agent',
             'email' => 'agent@test.com',
-            'password'=> 'password',
-            'role'  => 'agent',
+            'password' => 'password',
+            'role' => 'agent',
         ]);
 
         // 2. Create an Employee for testing
         $employee = User::factory()->create([
-            'name'  => 'Ayush Employee',
+            'name' => 'Ayush Employee',
             'email' => 'employee@test.com',
-            'password'=> 'password',
-            'role'  => 'employee',
+            'password' => 'password',
+            'role' => 'employee',
         ]);
 
         // 3. Create 10 tickets for this specific employee

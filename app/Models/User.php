@@ -52,7 +52,8 @@ class User extends Authenticatable
         return $this->role === 'agent';
     }
 
-    public function tickets(){
-        return $this->hasMany(Ticket::class , 'created_by' )->latest();
+    public function tickets()
+    {
+        return $this->hasMany(Ticket::class, 'created_by')->latest();
     }
 }

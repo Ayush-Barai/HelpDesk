@@ -19,14 +19,14 @@ return new class extends Migration
             $table->string('category'); // Access, Hardware, Network, Bug, Other
             $table->integer('severity'); // 1 to 5
             $table->string('status')->default('Open'); // Open, In Progress, Resolved, Closed
-            
+
             // Relationships
             // created_by is the Employee
             $table->foreignId('created_by')->constrained('users')->onDelete('cascade');
-            
+
             // assigned_to is the Agent (can be null if unassigned)
             $table->foreignId('assigned_to')->nullable()->constrained('users')->onDelete('set null');
-            
+
             $table->timestamps();
         });
     }

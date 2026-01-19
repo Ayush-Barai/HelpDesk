@@ -2,21 +2,23 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class Ticket extends Model
 {
     use HasFactory;
-    
+
     protected $fillable = [
         'subject',
         'description',
         'category',
         'severity',
         'status',
-        'created_by'
+        'created_by',
+        'assigned_to',
     ];
+
     public function attachments()
     {
         return $this->hasMany(Attachment::class);
@@ -31,7 +33,8 @@ class Ticket extends Model
     {
         return $this->belongsTo(User::class, 'assigned_to');
     }
-     public function employee()
+
+    public function employee()
     {
         return $this->belongsTo(User::class, 'assigned_to');
     }
