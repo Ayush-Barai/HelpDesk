@@ -39,7 +39,7 @@ A robust, internal IT ticketing system built for the **Jr. Laravel Take-Home Ass
 
 1.  **Clone & Install Dependencies**
     ```bash
-    git clone [https://github.com/your-username/helpdesk-triage.git](https://github.com/your-username/helpdesk-triage.git)
+    git clone [https://github.com/Ayush-Barai/HelpDesk.git](https://github.com/Ayush-Barai/HelpDesk.git)
     cd helpdesk-triage
     composer install
     npm install && npm run build
