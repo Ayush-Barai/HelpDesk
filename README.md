@@ -14,10 +14,10 @@ A robust, internal IT ticketing system built for the **Jr. Laravel Take-Home Ass
 
 ### 📎 Secure Attachment System
 * **Private Storage:** All files (`png`, `jpg`, `pdf`, `txt`, `log`) are stored on a private disk (`storage/app/private`).
-* **Controlled Access:** Direct URL access to files is blocked. A secure controller "bridge" verifies user permissions via Laravel Gates before allowing a download.
-* **Interactive UI:** Drag-and-drop file area with immediate feedback and the ability to remove specific files before submission.
+* **Controlled Access:** Direct URL access to files is blocked.
 
-### 🔍 Lane 1: Similar Ticket Detection (Classic)
+
+###  Similar Ticket Detection (Classic)
 * **Duplicate Prevention:** As an employee types a subject line, the system proactively searches for existing issues.
 * **Optimized Shortlisting:** To ensure high performance, the search is limited to tickets from the last **30 days** and excludes **Closed** tickets.
 * **Debounced Input:** A 500ms delay is implemented on search requests to optimize server resources and reduce database load.
@@ -33,7 +33,7 @@ Before proceeding with the installation, ensure you have the following installed
 * **Database:** SQLite (default) / MySQL
 * **Frontend:** Blade + Tailwind CSS + Alpine.js
 * **Security:** Laravel Policies, Gates & Form Requests
-* **Quality:** Laravel Pint (Formatting) & PHPStan (Static Analysis)
+* **Quality:** Laravel Pint (Formatting) 
 
 ---
 
@@ -95,12 +95,6 @@ Attachments are stored in a non-public directory. Access is managed through a de
 Maintain high standards by running the following commands:
 
 * **Fix Formatting:** `./vendor/bin/pint`
-* **Run Static Analysis:** `./vendor/bin/phpstan analyze`
 
 ---
 
-## 📈 Trade-offs & Limitations
-* **Blade + Alpine vs. React:** For this 10-hour sprint, I opted for **Blade + Alpine.js**. This allowed for rapid development of secure file handling and server-side filtering without the overhead of complex API state management, while still providing a modern, reactive feel.
-* **Search Engine:** While `LIKE` queries are efficient for this scale, for a production application with millions of tickets, I would transition to **Laravel Scout** with **Meilisearch** or **Algolia** for advanced fuzzy matching.
-
----
