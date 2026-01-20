@@ -25,7 +25,7 @@ class DatabaseSeeder extends Seeder
 
         // 2. Create an Employee for testing
         $employee = User::factory()->create([
-            'name' => 'Ayush Employee',
+            'name' => 'Employee',
             'email' => 'employee@test.com',
             'password' => 'password',
             'role' => 'employee',
