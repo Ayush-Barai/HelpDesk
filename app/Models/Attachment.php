@@ -18,6 +18,7 @@ class Attachment extends Model
         'file_size',
     ];
 
+    // Define the relationship between Attachment and Ticket models.
     public function ticket()
     {
         return $this->belongsTo(Ticket::class);
