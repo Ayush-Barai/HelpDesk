@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Attachment extends Model
 {
+    // This model represents an attachment associated with a ticket in the help desk system.
     use HasFactory;
 
     protected $fillable = [
